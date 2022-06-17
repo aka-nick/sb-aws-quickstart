@@ -2,13 +2,18 @@ package com.akanick.saq.service.posts;
 
 import com.akanick.saq.domain.posts.Posts;
 import com.akanick.saq.domain.posts.PostsRepository;
+import com.akanick.saq.web.dto.PostsListResponseDto;
 import com.akanick.saq.web.dto.PostsResponseDto;
 import com.akanick.saq.web.dto.PostsSaveRequestDto;
 import com.akanick.saq.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
+import java.util.List;
+import java.util.stream.Collectors;
+
+//import javax.transaction.Transactional;
 
 @RequiredArgsConstructor
 @Service
@@ -35,4 +40,20 @@ public class PostsService {
 
         return new PostsResponseDto(entity);
     }
+
+    @Transactional(readOnly = true)
+    public List<PostsListResponseDto> findAllDesc() {
+        return postsRepository.findAllDesc().stream()
+                .map(PostsListResponseDto::new)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        Posts posts = postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
+
+        postsRepository.delete(posts);
+    }
+
+
 }
