@@ -66,10 +66,12 @@ var main = {
             alert('글이 삭제되었습니다.');
             window.location.href = '/';
         }).fail(function (error) {
-            alert(JSON.stringify(error)); //아래와 같이 변경
+            // alert(JSON.stringify(error)); //아래와 같이 변경
             // if (error.status == 500) {
             //     alert("존재하지 않는 글이거나 이미 삭제된 글입니다.");
-            // }
+            // } //아래와 같이 또 변경
+            alert(error.responseText);
+            console.log(error.status + " : " + JSON.stringify(error));
         });
     }
 

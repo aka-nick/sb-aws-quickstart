@@ -1,5 +1,7 @@
 package com.akanick.saq.web;
 
+import com.akanick.saq.config.auth.LoginUser;
+import com.akanick.saq.config.auth.dto.SessionUser;
 import com.akanick.saq.service.posts.PostsService;
 import com.akanick.saq.web.dto.PostsResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +17,11 @@ public class IndexController {
     private final PostsService postsService;
 
     @GetMapping("/")
-    public String index(Model model) {
+    public String index(Model model, @LoginUser SessionUser user) {
         model.addAttribute("posts", postsService.findAllDesc());
+        if (user != null) {
+            model.addAttribute("user_name", user.getName());
+        }
         return "index";
     }
 
