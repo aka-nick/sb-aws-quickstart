@@ -7,7 +7,7 @@
 
 env:
   S3_BUCKET_NAME: sb-aws-quickstart-build
-  PROJECT_NAME: aws-web-service
+  PROJECT_NAME: sb-aws-quickstart
 
 name: sb-aws-cicd
 
